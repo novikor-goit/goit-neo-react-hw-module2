@@ -3,6 +3,7 @@ import Description from './components/Description/Description.jsx';
 import Options from './components/Options/Options.jsx';
 import Feedback from './components/Feedback/Feedback.jsx';
 import Reviews from './ResourceModel/Reviews.js';
+import Notification from './components/Notification/Notification.jsx';
 
 const App = () => {
   const defaultReviews = {
@@ -23,11 +24,22 @@ const App = () => {
 
   const reset = () => setReviews(defaultReviews);
 
+  const { good, neutral, bad } = reviews;
+  const totalReviews = good + neutral + bad;
+  const positive = `${Math.round((good / totalReviews) * 100)}%`;
+  const feedbackLines = {
+    ...reviews,
+    ...{
+      total: totalReviews,
+      positive: positive
+    }
+  };
+
   return (
     <main>
       <Description />
       <Options handler={incrementByType} resetHandler={reset} reviews={reviews} />
-      <Feedback reviews={reviews} />
+      {totalReviews > 0 ? <Feedback lines={feedbackLines} /> : <Notification />}
     </main>
   );
 };

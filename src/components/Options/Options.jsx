@@ -7,7 +7,7 @@ const Options = ({ handler, resetHandler, reviews }) => {
       {Object.keys(reviews).map((key) => (
         <FeedbackButton title={key} handler={() => handler(key)} key={key} />
       ))}
-      {hasReviews && <FeedbackButton title="Reset" handler={resetHandler} />}
+      {hasReviews && <FeedbackButton title="Reset" handler={resetHandler} key="reset" />}
     </section>
   );
 };
